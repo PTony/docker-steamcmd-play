@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM ubuntu:wily
 
 ENV RUNUSER daemon
 ENV DAEMON_HOME /home/${RUNUSER}
@@ -7,22 +7,11 @@ ENV STEAMCMD ${STEAMCMD_LOC}/steamcmd.sh
 
 RUN apt-get update && \
         DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        lib32gcc1 \
         ca-certificates \
-        lib32stdc++6 \
-        lib32z1 \
-        lib32z1-dev \
-        curl && \
-            apt-get clean
-
-RUN rm -rf \
-        /var/lib/apt/lists/* \
-        /tmp/* \
-        /var/tmp/* \
-        /usr/share/locale/* \
-        /var/cache/debconf/*-old \
-        /var/lib/apt/lists/* \
-        /usr/share/doc/*
+        curl \
+        lib32gcc1 \
+        && apt-get -y clean \
+        && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p ${STEAMCMD_LOC}  && \
         curl -s http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar -v -C ${STEAMCMD_LOC} -zx && \
