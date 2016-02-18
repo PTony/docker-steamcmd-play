@@ -14,10 +14,10 @@ RUN apt-get update && \
         && apt-get -y clean \
         && rm -rf /var/lib/apt/lists/*
 
-# Create user and steamcmd dirs, then dl and extract steamcmd and finally give ownership to user
-RUN mkdir -p ${STEAMCMD_LOC}  \
-        && curl -s http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar -vxz -C ${STEAMCMD_LOC} \
-        && rm steamcmd_linux.tar.gz \
+# Create user account, his home dir and steamcmd dir, then dl and extract steamcmd and finally give ownership of his homedir to user
+RUN mkdir -p ${STEAMCMD_LOC} \
+        && curl -s http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar -xvzf - -C ${STEAMCMD_LOC} \
+        && useradd ${RUNUSER} \
         && chown -R ${RUNUSER}:${RUNUSER} ${USER_HOME}
 
 WORKDIR ${STEAMCMD_LOC}
