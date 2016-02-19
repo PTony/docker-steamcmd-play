@@ -1,4 +1,4 @@
-FROM inanimate/steamcmd-play
+FROM ptony/docker-steamcmd-play
 
 ENV GAME_NAME left4dead2
 ENV GAME_ID 222860
